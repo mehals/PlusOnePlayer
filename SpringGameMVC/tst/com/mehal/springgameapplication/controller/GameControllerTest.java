@@ -11,25 +11,25 @@ import com.mehal.springgameapplication.GameService;
 import com.mehal.springgameapplication.entities.Game;
 
 public class GameControllerTest {
-    private GameController gameController;
-    private GameService mockGameService;
-    private Model mockModel;
+	private GameController gameController;
+	private GameService mockGameService;
+	private Model mockModel;
 
-    @Before
-    public void setup() {
-	mockGameService = mock(GameService.class);
-	mockModel = mock(Model.class);
-	gameController = new GameController();
-	gameController.gameService = mockGameService;
-    }
+	@Before
+	public void setup() {
+		mockGameService = mock(GameService.class);
+		mockModel = mock(Model.class);
+		gameController = new GameController();
+		gameController.gameService = mockGameService;
+	}
 
-    @Test
-    public void testGameController() throws Exception {
-	Game mockGame = new Game();
-	mockGame.setGameName("Battlestar%20Galactica");
-	when(mockGameService.getGame("Battlestar%20Galactica")).thenReturn(
-		mockGame);
+	@Test
+	public void testGameController() throws Exception {
+		Game mockGame = new Game();
+		mockGame.setGameName("Battlestar%20Galactica");
+		when(mockGameService.getGame("Battlestar%20Galactica")).thenReturn(
+				mockGame);
 
-	gameController.getGameDetails("Battlestar%20Galactica", mockModel);
-    }
+		gameController.getGameDetails("Battlestar%20Galactica", mockModel);
+	}
 }
