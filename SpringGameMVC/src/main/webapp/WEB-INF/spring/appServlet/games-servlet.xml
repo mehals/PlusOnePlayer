@@ -61,7 +61,17 @@
       </property>
    </bean>
    
-   <bean id="gameController" class="com.mehal.springgameapplication.controller.GameController"/>	   
+   <bean id="bggClient" class="com.mehal.springgameapplication.outbound.BoardGameGeekClient"/>      	  
+   
+   <bean id="gameManager" class="com.mehal.springgameapplication.managers.GameManager">
+   	<constructor-arg ref="gameService"/>
+   	<constructor-arg ref="bggClient"/>
+   </bean>      
+   
+   <bean id="gameController" class="com.mehal.springgameapplication.controller.GameController">
+   	<constructor-arg ref="gameService"/>
+   	<constructor-arg ref="gameManager"/>
+   </bean>
    
    <tx:annotation-driven transaction-manager="transactionManager"/>
 	

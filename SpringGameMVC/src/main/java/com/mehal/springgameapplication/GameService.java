@@ -27,7 +27,8 @@ public class GameService {
 	}
     }
 
-    public Game createNewGame(String gameName, Integer maxPlayers) throws Exception {
+    public Game createNewGame(String gameName, Integer maxPlayers)
+	    throws Exception {
 	Game game = new Game();
 	game.setGameName(gameName);
 	game.setMaxPlayers(maxPlayers);
@@ -42,7 +43,8 @@ public class GameService {
 	return gameDao.getAllGames();
     }
 
-    public GameInstance createNewGameInstance(String gameName, DateTime gameDate, String host, String gameLocation)
+    public GameInstance createNewGameInstance(String gameName,
+	    DateTime gameDate, String host, String gameLocation)
 	    throws Exception {
 	GameInstance gameInstance = new GameInstance();
 	gameInstance.setGameName(gameName);
@@ -54,7 +56,8 @@ public class GameService {
 	return gameInstance;
     }
 
-    public GameInstance createNewGameInstance(GameInstance gameInstance) throws Exception {
+    public GameInstance createNewGameInstance(GameInstance gameInstance)
+	    throws Exception {
 	gameDao.addGameInstance(gameInstance);
 	return gameInstance;
     }

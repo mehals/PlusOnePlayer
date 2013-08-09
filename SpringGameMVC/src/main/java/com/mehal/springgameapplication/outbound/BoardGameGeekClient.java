@@ -64,6 +64,8 @@ public class BoardGameGeekClient {
 		.getText());
 	returnGame.setSmallIconUrl(maxGameNode.selectSingleNode("thumbnail")
 		.getText());
+	returnGame.setRuntime(Integer.parseInt(maxGameNode.selectSingleNode(
+		"playingtime").valueOf("@value")));
 
 	return returnGame;
     }

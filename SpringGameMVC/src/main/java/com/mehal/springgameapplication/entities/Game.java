@@ -1,9 +1,6 @@
 package com.mehal.springgameapplication.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "GAMES")
@@ -13,13 +10,28 @@ public class Game {
     private String gameName;
 
     @Column(name = "MAX_PLAYERS", nullable = false)
-    private int maxPlayers;
+    private Integer maxPlayers;
+
+    @Column(name = "MIN_PLAYERS", nullable = false)
+    private Integer minPlayers;
+
+    @Column(name = "IDEAL_PLAYERS", nullable = true)
+    private Integer idealPlayers;
+
+    @Column(name = "SMALL_ICON_URL", nullable = true)
+    private String smallIconUrl;
+
+    @Column(name = "LARGE_ICON_URL", nullable = true)
+    private String largeIconUrl;
+
+    @Column(name = "RUNTIME_MINUTES", nullable = true)
+    private Integer runtime;
 
     public String getGameName() {
 	return gameName;
     }
 
-    public int getMaxPlayers() {
+    public Integer getMaxPlayers() {
 	return maxPlayers;
     }
 
@@ -29,5 +41,45 @@ public class Game {
 
     public void setGameName(String gameName) {
 	this.gameName = gameName;
+    }
+
+    public Integer getMinPlayers() {
+	return minPlayers;
+    }
+
+    public void setMinPlayers(Integer minPlayers) {
+	this.minPlayers = minPlayers;
+    }
+
+    public Integer getIdealPlayers() {
+	return idealPlayers;
+    }
+
+    public void setIdealPlayers(Integer idealPlayers) {
+	this.idealPlayers = idealPlayers;
+    }
+
+    public String getSmallIconUrl() {
+	return smallIconUrl;
+    }
+
+    public void setSmallIconUrl(String smallIconUrl) {
+	this.smallIconUrl = smallIconUrl;
+    }
+
+    public String getLargeIconUrl() {
+	return largeIconUrl;
+    }
+
+    public void setLargeIconUrl(String largeIconUrl) {
+	this.largeIconUrl = largeIconUrl;
+    }
+
+    public Integer getRuntime() {
+	return runtime;
+    }
+
+    public void setRuntime(Integer runtime) {
+	this.runtime = runtime;
     }
 }
