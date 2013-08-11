@@ -7,7 +7,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 @Entity
-@Table(name = "GAME_INSTANCES")
+@Table(name = "MEHALS.GAME_INSTANCES")
 public class GameInstance {
     @Id
     @GeneratedValue

@@ -38,17 +38,28 @@ public class GameManagerTest {
 	assertEquals("Game should match", exampleGame, returnedGame);
 
 	verify(mockGameDao, times(1)).getGame(MOCK_GAME_NAME);
-	verify(mockGameDao, times(0)).addGame(any(Game.class));
+	verifyNoMoreInteractions(mockGameDao);
 	verifyZeroInteractions(mockBGGClient);
     }
 
     @Test
-    public void retrieveGame_gameNotInDao() throws Exception {
+    public void retrieveOrCreateGame_gameInDao() throws Exception {
+	when(mockGameDao.getGame(MOCK_GAME_NAME)).thenReturn(exampleGame);
+
+	assertEquals("Game should match", exampleGame,
+		gameManager.retrieveOrCreateGame(MOCK_GAME_NAME));
+	verify(mockGameDao, times(1)).getGame(MOCK_GAME_NAME);
+	verifyNoMoreInteractions(mockGameDao);
+	verifyZeroInteractions(mockBGGClient);
+    }
+
+    @Test
+    public void createGame_gameNotInDao() throws Exception {
 	when(mockGameDao.getGame(MOCK_GAME_NAME)).thenReturn(null);
 	when(mockBGGClient.getGameForName(MOCK_GAME_NAME)).thenReturn(
 		exampleGame);
 
-	Game returnedGame = gameManager.retrieveGame(MOCK_GAME_NAME);
+	Game returnedGame = gameManager.retrieveOrCreateGame(MOCK_GAME_NAME);
 	assertEquals("Game should match", exampleGame, returnedGame);
 
 	verify(mockGameDao, times(1)).getGame(MOCK_GAME_NAME);
@@ -58,15 +69,15 @@ public class GameManagerTest {
     }
 
     @Test
-    public void retrieveGame_noGameExists() throws Exception {
+    public void createGame_noGameExists() throws Exception {
 	when(mockGameDao.getGame(MOCK_GAME_NAME)).thenReturn(null);
 	when(mockBGGClient.getGameForName(MOCK_GAME_NAME)).thenReturn(null);
 
-	Game returnedGame = gameManager.retrieveGame(MOCK_GAME_NAME);
+	Game returnedGame = gameManager.retrieveOrCreateGame(MOCK_GAME_NAME);
 	assertNull("Game should be null", returnedGame);
 
-	verify(mockGameDao, times(1)).getGame(MOCK_GAME_NAME);
 	verify(mockBGGClient, times(1)).getGameForName(MOCK_GAME_NAME);
-	verify(mockGameDao, times(0)).addGame(any(Game.class));
+	verify(mockGameDao, times(1)).getGame(MOCK_GAME_NAME);
+	verifyNoMoreInteractions(mockGameDao);
     }
 }

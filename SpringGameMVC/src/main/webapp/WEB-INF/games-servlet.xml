@@ -26,10 +26,10 @@
 	<context:component-scan base-package="com.mehal.springgameapplication.controller" />
 		
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-		<property name="url" value="jdbc:hsqldb:http://localhost/" />
-		<property name="username" value="SA" />
-		<property name="password" value="" />
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@closet.clm7nkmry5ix.us-west-2.rds.amazonaws.com:1521:closet" />
+		<property name="username" value="gameservice" />
+		<property name="password" value="foobar" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -37,7 +37,7 @@
 		<property name="packagesToScan" value="com.mehal.springgameapplication.entities"/>
 		<property name="hibernateProperties">
 			<value>
-				hibernate.dialect=org.hibernate.dialect.HSQLDialect
+				hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
 				hibernate.connection.provider_class=org.hibernate.connection.C3P0ConnectionProvider
 			</value>			
 		</property>
@@ -45,14 +45,11 @@
 	
 	<bean id="hibernateGameDao" class="com.mehal.springgameapplication.dao.HibernateGameDao">
 		<constructor-arg ref="sessionFactory"/>
-	</bean>
-	
-	<bean id="gameDriver" class="com.mehal.springgameapplication.GameDriver">		
-		<constructor-arg ref="gameService"/>
 	</bean>	
 	
 	<bean id="gameService" class="com.mehal.springgameapplication.GameService">
-		<constructor-arg ref="hibernateGameDao"/>
+		<constructor-arg ref="gameManager"/>
+		<constructor-arg ref="gameInstanceManager"/>
 	</bean>
 		  
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -67,6 +64,11 @@
    	<constructor-arg ref="hibernateGameDao"/>
    	<constructor-arg ref="bggClient"/>
    </bean>      
+   
+   <bean id="gameInstanceManager" class="com.mehal.springgameapplication.managers.GameInstanceManager">
+   	<constructor-arg ref="hibernateGameDao"/>
+   </bean>
+   
    
    <bean id="gameController" class="com.mehal.springgameapplication.controller.GameController">
    	<constructor-arg ref="gameService"/>

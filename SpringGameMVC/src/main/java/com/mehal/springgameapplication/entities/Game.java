@@ -5,7 +5,7 @@ import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 @Entity
-@Table(name = "GAMES")
+@Table(name = "MEHALS.GAMES")
 public class Game {
     @Id
     @Column(name = "GAME_NAME", nullable = false)
