@@ -4,43 +4,31 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import com.mehal.springgameapplication.dao.GameDao;
 import com.mehal.springgameapplication.entities.Game;
 import com.mehal.springgameapplication.entities.GameInstance;
+import com.mehal.springgameapplication.managers.GameInstanceManager;
+import com.mehal.springgameapplication.managers.GameManager;
 
 public class GameService {
-    private GameDao gameDao;
+    private GameManager gameManager;
+    private GameInstanceManager gameInstanceManager;
 
-    public GameService() {
-	gameDao = null;
+    public GameService(GameManager gameManager,
+	    GameInstanceManager gameInstanceManager) {
+	this.gameManager = gameManager;
+	this.gameInstanceManager = gameInstanceManager;
     }
 
-    public GameService(GameDao gameDao) {
-	this.gameDao = gameDao;
+    public Game getGame(String gameName) throws Exception {
+	return gameManager.retrieveGame(gameName);
     }
 
-    public Game getGame(String gameName) {
-	try {
-	    return gameDao.getGame(gameName);
-	} catch (Exception exception) {
-	    return null;
-	}
-    }
-
-    public Game createNewGame(String gameName, Integer maxPlayers)
-	    throws Exception {
-	Game game = new Game();
-	game.setGameName(gameName);
-	game.setMaxPlayers(maxPlayers);
-
-	if (gameDao.getGame(gameName) == null) {
-	    gameDao.addGame(game);
-	}
-	return game;
+    public Game createNewGame(String gameName) throws Exception {
+	return gameManager.createGame(gameName);
     }
 
     public List<Game> getAllGames() throws Exception {
-	return gameDao.getAllGames();
+	return gameManager.getAllGames();
     }
 
     public GameInstance createNewGameInstance(String gameName,
@@ -51,19 +39,20 @@ public class GameService {
 	gameInstance.setGameDate(gameDate);
 	gameInstance.setHost(host);
 	gameInstance.setGameLocation(gameLocation);
-	gameDao.addGameInstance(gameInstance);
+
+	gameInstanceManager.createNewGameInstance(gameInstance);
 
 	return gameInstance;
     }
 
     public GameInstance createNewGameInstance(GameInstance gameInstance)
 	    throws Exception {
-	gameDao.addGameInstance(gameInstance);
+	gameInstanceManager.createNewGameInstance(gameInstance);
 	return gameInstance;
     }
 
     public List<GameInstance> getUpcomingGames() throws Exception {
-	return gameDao.getUpcomingGameInstances();
+	return gameInstanceManager.getNextWeekGames();
     }
 
 }

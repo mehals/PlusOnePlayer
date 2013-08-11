@@ -52,22 +52,20 @@ public class HibernateGameDao implements GameDao {
     @Override
     public List<Game> getAllGames() throws HibernateException,
 	    NotSupportedException, SystemException {
-	@SuppressWarnings("rawtypes")
-	List games = currentSession().createQuery("from Game").list();
+	List<Game> games = currentSession().createQuery("from Game").list();
 
 	return games;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<GameInstance> getUpcomingGameInstances() throws Exception {
+    public List<GameInstance> getUpcomingGameInstances(DateTime start,
+	    DateTime end) throws Exception {
 	Criteria criteria = currentSession().createCriteria(GameInstance.class)
-		.add(Restrictions.between("gameDate", new DateTime(),
-			new DateTime().plusDays(7)));
+		.add(Restrictions.between("gameDate", start, end));
 
+	@SuppressWarnings("unchecked")
 	List<GameInstance> gameInstances = criteria.list();
 
 	return gameInstances;
-
     }
 }

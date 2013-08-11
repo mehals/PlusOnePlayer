@@ -21,7 +21,8 @@ public class BoardGameGeekClientIntegrationTest {
     public void getScrabble() throws DocumentException {
 	Game actual = bggClient.getGameForName("Scrabble");
 	assertEquals("Scrabble", actual.getGameName());
-	assertEquals(4, actual.getMaxPlayers());
+	assertEquals("Number of players should match", 4, actual
+		.getMaxPlayers().intValue());
 	System.out.println(actual.getLargeIconUrl());
     }
 
@@ -29,7 +30,8 @@ public class BoardGameGeekClientIntegrationTest {
     public void getBSG() throws DocumentException {
 	Game actual = bggClient.getGameForName("Battlestar Galactica");
 	assertEquals("Battlestar Galactica", actual.getGameName());
-	assertEquals(6, actual.getMaxPlayers());
+	assertEquals("Number of players should match", 6, actual
+		.getMaxPlayers().intValue());
 	System.out.println(actual);
 	System.out.println(actual.getLargeIconUrl());
     }

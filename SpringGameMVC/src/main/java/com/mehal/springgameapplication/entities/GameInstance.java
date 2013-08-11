@@ -1,11 +1,8 @@
 package com.mehal.springgameapplication.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -68,5 +65,20 @@ public class GameInstance {
 
     public void setGameLocation(String gameLocation) {
 	this.gameLocation = gameLocation;
+    }
+
+    public boolean equals(Object obj) {
+	if (obj == null) {
+	    return false;
+	}
+	if (obj == this) {
+	    return true;
+	}
+	if (obj.getClass() != this.getClass()) {
+	    return false;
+	}
+
+	GameInstance other = (GameInstance) obj;
+	return new EqualsBuilder().append(gameName, other.gameName).isEquals();
     }
 }
